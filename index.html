@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>RRB Group D — Track Prep</title>
+<meta name="theme-color" content="#1B3A5C" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icons/icon-192.png" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+  :root{
+    --paper:#F7F3E9; --paperDark:#EFE8D8; --ink:#1A1A1A; --muted:#8A8171;
+    --blue:#1B3A5C; --blueLight:#2C5382; --amber:#F2A93B; --green:#2D7D5A; --red:#C1443D;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;}
+  .display{font-family:'Bebas Neue',sans-serif;letter-spacing:.03em;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  button{cursor:pointer;font-family:inherit;}
+  #app{width:100%;max-width:480px;min-height:100vh;margin:0 auto;background:var(--paper);position:relative;padding-bottom:20px;}
+  .ticket{position:relative;}
+  ::-webkit-scrollbar{width:6px;}
+  ::-webkit-scrollbar-thumb{background:var(--muted);border-radius:4px;}
+  .screen{padding:24px 20px 40px;animation:fade .2s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  .topbar{display:flex;align-items:center;justify-content:space-between;}
+  .topbar .back{background:none;border:none;color:var(--blue);font-size:14px;font-weight:600;padding:6px 0;}
+  .topbar .title{font-size:20px;color:var(--blue);}
+  .header{background:var(--blue);border-radius:10px;padding:18px 20px;color:var(--paper);margin-bottom:22px;box-shadow:0 4px 0 #1a1a1a22;}
+  .eyebrow{font-size:11px;opacity:.7;letter-spacing:2px;margin-bottom:4px;}
+  .h1{font-size:40px;line-height:1;color:var(--amber);}
+  .h2{font-size:22px;letter-spacing:4px;margin-top:2px;}
+  .chips{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+  .chip{font-size:10px;color:#fff;padding:3px 8px;border-radius:4px;letter-spacing:1px;}
+  .menu-ticket{width:100%;display:flex;align-items:center;gap:14px;background:#fff;border:2px dashed #0001;border-radius:12px;padding:16px 18px;margin-bottom:12px;text-align:left;}
+  .menu-ticket .icon{font-size:24px;width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .menu-ticket .title{font-size:20px;color:var(--ink);}
+  .menu-ticket .subtitle{font-size:12.5px;color:var(--muted);}
+  .menu-ticket .flex1{flex:1;}
+  .topic-btn{width:100%;background:#fff;border:2px solid #0002;border-radius:10px;padding:14px 16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}
+  .topic-tag{font-size:10px;padding:3px 8px;border-radius:4px;}
+  .progressbar{height:5px;background:var(--paperDark);border-radius:4px;overflow:hidden;margin-bottom:14px;}
+  .progressbar .fill{height:100%;background:var(--green);transition:width .3s;}
+  .timerrow{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .timerbar{flex:1;height:6px;background:var(--paperDark);border-radius:4px;overflow:hidden;}
+  .timerbar .fill{height:100%;transition:width 1s linear;}
+  .qcard{background:#fff;border-radius:12px;padding:18px 16px;margin-bottom:16px;border:2px solid #0002;}
+  .qtag{font-size:10px;padding:2px 7px;border-radius:4px;}
+  .qtext{font-size:16.5px;font-weight:600;margin-top:10px;line-height:1.4;}
+  .opt{width:100%;text-align:left;padding:13px 14px;border-radius:10px;margin-bottom:9px;background:#fff;border:2px solid var(--paperDark);color:var(--ink);font-size:14.5px;font-weight:500;display:flex;align-items:center;gap:10px;}
+  .opt .letter{width:22px;height:22px;border-radius:6px;background:var(--paperDark);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
+  .explain{margin-top:4px;font-size:12.5px;color:var(--muted);background:var(--paperDark);padding:10px 12px;border-radius:8px;}
+  .resultbox{background:var(--blue);border-radius:14px;padding:26px 20px;color:var(--paper);text-align:center;margin-top:18px;}
+  .resultscore{font-size:52px;color:var(--amber);font-weight:700;margin:6px 0;}
+  .btnrow{display:flex;gap:10px;margin-top:16px;}
+  .btn{flex:1;padding:12px;border-radius:8px;font-weight:600;font-size:14px;}
+  .btn-outline{border:2px solid var(--blue);background:#fff;color:var(--blue);}
+  .btn-fill{border:none;background:var(--blue);color:#fff;}
+  .save-row{margin-top:14px;display:flex;gap:8px;}
+  .save-row input{flex:1;padding:11px 12px;border-radius:8px;border:2px solid var(--paperDark);font-size:13.5px;background:#fff;}
+  .save-row button{padding:0 18px;border-radius:8px;border:none;background:var(--amber);color:var(--ink);font-weight:700;font-size:13px;}
+  .lb-row{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--paperDark);border-radius:10px;padding:12px 14px;margin-bottom:8px;}
+  .lb-rank{width:30px;height:30px;border-radius:8px;background:var(--paperDark);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--muted);flex-shrink:0;}
+  .lb-name{font-weight:600;font-size:14.5px;}
+  .lb-sub{font-size:11px;color:var(--muted);}
+  .lb-score{font-size:18px;font-weight:700;color:var(--blue);}
+  .flash-card{border-radius:16px;min-height:220px;padding:26px 22px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;cursor:pointer;}
+  .empty{text-align:center;color:var(--muted);padding:40px 20px;font-size:13.5px;background:#fff;border-radius:12px;border:2px dashed var(--paperDark);}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* ---------------- DATA ---------------- */
+const COLORS = { paper:"#F7F3E9", paperDark:"#EFE8D8", ink:"#1A1A1A", muted:"#8A8171",
+  blue:"#1B3A5C", blueLight:"#2C5382", amber:"#F2A93B", green:"#2D7D5A", red:"#C1443D" };
+const TOPIC_COLORS = { Maths: COLORS.blue, Reasoning: COLORS.green, Science: COLORS.red, GK: COLORS.amber };
+const QUESTION_TIME = 30;
+
+const QUESTIONS = [
+  {id:"m1",topic:"Maths",q:"A train 150m long crosses a pole in 10 seconds. Find its speed in km/hr.",options:["45 km/hr","54 km/hr","60 km/hr","50 km/hr"],correct:1,explain:"Speed = 150/10 = 15 m/s = 15×18/5 = 54 km/hr"},
+  {id:"m2",topic:"Maths",q:"Find the LCM of 12, 18 and 24.",options:["36","72","48","144"],correct:1,explain:"12=2²×3, 18=2×3², 24=2³×3 → LCM = 2³×3² = 72"},
+  {id:"m3",topic:"Maths",q:"If the ratio of two numbers is 3:5 and their sum is 96, find the smaller number.",options:["30","32","36","40"],correct:2,explain:"3x+5x=96 → x=12 → smaller = 3×12 = 36"},
+  {id:"m4",topic:"Maths",q:"A sum becomes double in 8 years at simple interest. In how many years will it become triple?",options:["12 years","16 years","20 years","24 years"],correct:1,explain:"SI for 1 unit growth in 8 yrs. To triple (2 units growth) needs 16 years."},
+  {id:"m5",topic:"Maths",q:"What is 15% of 480?",options:["62","72","82","68"],correct:1,explain:"15/100 × 480 = 72"},
+  {id:"m6",topic:"Maths",q:"The average of 5 consecutive numbers is 30. Find the largest number.",options:["31","32","33","34"],correct:1,explain:"Numbers: 28,29,30,31,32 → largest = 32"},
+  {id:"m7",topic:"Maths",q:"A can do a work in 12 days, B in 18 days. Working together, in how many days will it finish?",options:["6.4 days","7.2 days","8 days","9 days"],correct:1,explain:"1/12+1/18 = 5/36 → time = 36/5 = 7.2 days"},
+  {id:"m8",topic:"Maths",q:"Simplify: (2/3) ÷ (4/9)",options:["1/2","3/2","2/3","4/3"],correct:1,explain:"(2/3)×(9/4) = 18/12 = 3/2"},
+  {id:"r1",topic:"Reasoning",q:"Find the odd one out: Copper, Aluminium, Iron, Wood",options:["Copper","Aluminium","Iron","Wood"],correct:3,explain:"Wood is a non-conductor of electricity; others are metals/conductors."},
+  {id:"r3",topic:"Reasoning",q:"Complete the series: 2, 6, 12, 20, 30, ?",options:["36","40","42","44"],correct:2,explain:"Differences: 4,6,8,10,12 → 30+12 = 42"},
+  {id:"r4",topic:"Reasoning",q:"Pointing to a photo, Raj said, 'She is the daughter of my grandfather's only son.' How is she related to Raj?",options:["Mother","Sister","Aunt","Cousin"],correct:1,explain:"Grandfather's only son = Raj's father → his daughter = Raj's sister."},
+  {id:"r5",topic:"Reasoning",q:"Which number will replace the question mark? 7, 14, 28, 56, ?",options:["84","112","98","100"],correct:1,explain:"Each term doubles: 56×2 = 112"},
+  {id:"r6",topic:"Reasoning",q:"If South-East becomes North, North-East becomes West, then South becomes?",options:["North-West","South-East","North-East","South-West"],correct:0,explain:"Direction rotated 135° anticlockwise: South → North-West."},
+  {id:"r7",topic:"Reasoning",q:"In a mirror, clockwise direction becomes?",options:["Clockwise","Anticlockwise","Same direction","No change"],correct:1,explain:"Mirror reflection always reverses rotational direction."},
+  {id:"r8",topic:"Reasoning",q:"Choose the correctly spelled word.",options:["Neccessary","Necessary","Neccesary","Necessery"],correct:1,explain:"Correct spelling: Necessary"},
+  {id:"s1",topic:"Science",q:"Which gas is most abundant in Earth's atmosphere?",options:["Oxygen","Carbon dioxide","Nitrogen","Argon"],correct:2,explain:"Nitrogen makes up about 78% of the atmosphere."},
+  {id:"s2",topic:"Science",q:"The SI unit of electric current is:",options:["Volt","Ohm","Ampere","Watt"],correct:2,explain:"Electric current is measured in Amperes (A)."},
+  {id:"s3",topic:"Science",q:"Which part of the human body produces insulin?",options:["Liver","Pancreas","Kidney","Spleen"],correct:1,explain:"The pancreas produces insulin to regulate blood sugar."},
+  {id:"s4",topic:"Science",q:"Rusting of iron is an example of which type of reaction?",options:["Physical change","Oxidation reaction","Reduction reaction","Nuclear reaction"],correct:1,explain:"Rusting is oxidation — iron reacts with oxygen and moisture."},
+  {id:"s5",topic:"Science",q:"Which of these is a good conductor of heat used in railway tracks?",options:["Rubber","Steel","Plastic","Wood"],correct:1,explain:"Steel is strong and conducts/dissipates heat well — used for rails."},
+  {id:"s6",topic:"Science",q:"The working principle of a transformer is based on:",options:["Electromagnetic induction","Thermal expansion","Photoelectric effect","Magnetic repulsion"],correct:0,explain:"Transformers work on mutual electromagnetic induction (Faraday's law)."},
+  {id:"s7",topic:"Science",q:"Which vitamin is produced when skin is exposed to sunlight?",options:["Vitamin A","Vitamin B12","Vitamin C","Vitamin D"],correct:3,explain:"Sunlight helps the skin synthesize Vitamin D."},
+  {id:"s8",topic:"Science",q:"What is the pH value of pure water?",options:["0","7","9","14"],correct:1,explain:"Pure water is neutral with pH = 7."},
+  {id:"g1",topic:"GK",q:"Indian Railways' headquarters is located in which city?",options:["Mumbai","Kolkata","New Delhi","Chennai"],correct:2,explain:"Railway Board (Indian Railways HQ) is in New Delhi."},
+  {id:"g2",topic:"GK",q:"Who is known as the 'Father of Indian Railways'?",options:["Lord Dalhousie","Lord Curzon","Lord Mountbatten","Lord Wellesley"],correct:0,explain:"Lord Dalhousie is credited with laying the foundation of Indian Railways."},
+  {id:"g3",topic:"GK",q:"The first passenger train in India ran between which two cities?",options:["Mumbai–Thane","Delhi–Agra","Chennai–Bangalore","Kolkata–Howrah"],correct:0,explain:"India's first passenger train ran from Bombay (Mumbai) to Thane in 1853."},
+  {id:"g4",topic:"GK",q:"Which is the longest railway platform in the world?",options:["Kharagpur","Gorakhpur","Hubli","Kollam"],correct:1,explain:"Gorakhpur (UP) has the world's longest railway platform."},
+  {id:"g5",topic:"GK",q:"The Konkan Railway connects which states primarily?",options:["Kerala and Goa","Maharashtra and Karnataka via Goa","Gujarat and Rajasthan","Tamil Nadu and Andhra Pradesh"],correct:1,explain:"Konkan Railway runs along the west coast connecting Maharashtra, Goa, and Karnataka."},
+  {id:"g6",topic:"GK",q:"'Statue of Unity' is located in which state?",options:["Madhya Pradesh","Gujarat","Rajasthan","Maharashtra"],correct:1,explain:"Statue of Unity (Sardar Patel) is located in Gujarat, on the Narmada river."},
+  {id:"g7",topic:"GK",q:"Which is the national aquatic animal of India?",options:["Gharial","Ganges Dolphin","Olive Ridley Turtle","Whale Shark"],correct:1,explain:"The Ganges River Dolphin is India's national aquatic animal."},
+  {id:"g8",topic:"GK",q:"Vande Bharat Express is classified as a:",options:["Diesel locomotive train","Semi-high-speed train set","Freight train","Metro train"],correct:1,explain:"Vande Bharat is a semi-high-speed, self-propelled train set (Train 18)."}
+];
+
+const FLASHCARDS = [
+  {id:"f1",topic:"GK",front:"First Indian train (1853)?",back:"Bombay (Mumbai) to Thane — 34 km, on 16 April 1853."},
+  {id:"f2",topic:"GK",front:"Zones in Indian Railways?",back:"18 zones — largest network in Asia, 4th largest in the world."},
+  {id:"f3",topic:"Science",front:"Unit of force?",back:"Newton (N) — F = m × a"},
+  {id:"f4",topic:"Science",front:"Ohm's Law formula?",back:"V = I × R (Voltage = Current × Resistance)"},
+  {id:"f5",topic:"Maths",front:"Formula: Speed?",back:"Speed = Distance / Time (convert km/hr ↔ m/s using ×5/18 or ×18/5)"},
+  {id:"f6",topic:"Maths",front:"Formula: Simple Interest?",back:"SI = (P × R × T) / 100"},
+  {id:"f7",topic:"Reasoning",front:"Blood relation tip",back:"Always draw a family tree diagram — saves time and avoids confusion."},
+  {id:"f8",topic:"GK",front:"RRB Group D exam pattern?",back:"CBT: 100 Qs, 90 mins — Maths(25), Reasoning(30), Science(25), GK/CA(20)."},
+  {id:"f9",topic:"Science",front:"SI unit of Power?",back:"Watt (W) — 1 Watt = 1 Joule/second"},
+  {id:"f10",topic:"GK",front:"Konkan Railway founded?",back:"1998 — connects Maharashtra, Goa, Karnataka along the west coast."},
+  {id:"f11",topic:"Reasoning",front:"Coding-decoding tip",back:"Check letter position in alphabet (A=1...Z=26) and look for +/- pattern."},
+  {id:"f12",topic:"Maths",front:"Formula: Percentage",back:"Percentage = (Value / Total) × 100"}
+];
+
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function esc(s){const d=document.createElement('div');d.innerText=s;return d.innerHTML;}
+
+/* ---------------- STORAGE (localStorage, offline) ---------------- */
+function getLeaderboard(){ try{ return JSON.parse(localStorage.getItem('rrb-leaderboard')||'[]'); }catch(e){ return []; } }
+function saveLeaderboard(entry){
+  let data = getLeaderboard();
+  data.push(entry);
+  data.sort((a,b)=>b.score-a.score);
+  data = data.slice(0,50);
+  localStorage.setItem('rrb-leaderboard', JSON.stringify(data));
+}
+
+/* ---------------- APP STATE / ROUTER ---------------- */
+const app = document.getElementById('app');
+let state = { screen: 'home' };
+let quizState = null;
+let quizTimerId = null;
+let flashState = null;
+
+function render(){
+  if(state.screen==='home') renderHome();
+  else if(state.screen==='quizSelect') renderQuizSelect();
+  else if(state.screen==='quizPlay') renderQuizPlay();
+  else if(state.screen==='quizResult') renderQuizResult();
+  else if(state.screen==='flashcards') renderFlashcards();
+  else if(state.screen==='leaderboard') renderLeaderboard();
+}
+
+function topbar(title){
+  return `<div class="topbar">
+    <button class="back" onclick="goHome()">← Home</button>
+    <div class="title display">${title}</div>
+    <div style="width:50px"></div>
+  </div>`;
+}
+function goHome(){ clearInterval(quizTimerId); state={screen:'home'}; render(); }
+
+/* ---- HOME ---- */
+function renderHome(){
+  app.innerHTML = `
+  <div class="screen">
+    <div class="header">
+      <div class="eyebrow mono">INDIAN RAILWAYS · RECRUITMENT BOARD</div>
+      <div class="h1 display">GROUP D</div>
+      <div class="h2 display">TRACK PREP</div>
+      <div class="chips">
+        <span class="chip mono" style="background:${TOPIC_COLORS.Maths}">MATHS</span>
+        <span class="chip mono" style="background:${TOPIC_COLORS.Reasoning}">REASONING</span>
+        <span class="chip mono" style="background:${TOPIC_COLORS.Science}">SCIENCE</span>
+        <span class="chip mono" style="background:${TOPIC_COLORS.GK}">GK</span>
+      </div>
+    </div>
+    <div class="mono" style="font-size:11px;color:var(--muted);margin-bottom:10px;letter-spacing:1px;">SELECT PLATFORM →</div>
+
+    <button class="menu-ticket" onclick="openQuizSelect()">
+      <div class="icon" style="background:${COLORS.blue}18">🚦</div>
+      <div class="flex1"><div class="title display">Timed Quiz</div><div class="subtitle">30s per question · scored · topic-wise</div></div>
+      <div style="color:${COLORS.blue};font-size:18px;">→</div>
+    </button>
+    <button class="menu-ticket" onclick="openFlashcards()">
+      <div class="icon" style="background:${COLORS.green}18">🎫</div>
+      <div class="flex1"><div class="title display">Flashcards</div><div class="subtitle">Quick formulas & facts to revise</div></div>
+      <div style="color:${COLORS.green};font-size:18px;">→</div>
+    </button>
+    <button class="menu-ticket" onclick="openLeaderboard()">
+      <div class="icon" style="background:${COLORS.amber}18">🏆</div>
+      <div class="flex1"><div class="title display">Leaderboard</div><div class="subtitle">Top scorers on this device</div></div>
+      <div style="color:${COLORS.amber};font-size:18px;">→</div>
+    </button>
+
+    <div style="margin-top:26px;text-align:center;color:var(--muted);font-size:12px;">Nalla practice pannunga — CBT ku full prep! 🚂</div>
+  </div>`;
+}
+function openQuizSelect(){ state={screen:'quizSelect'}; render(); }
+function openFlashcards(){ flashState={order:shuffle(FLASHCARDS), idx:0, flipped:false}; state={screen:'flashcards'}; render(); }
+function openLeaderboard(){ state={screen:'leaderboard'}; render(); }
+
+/* ---- QUIZ SELECT ---- */
+const TOPIC_LIST = ["All Mixed","Maths","Reasoning","Science","GK"];
+function renderQuizSelect(){
+  const rows = TOPIC_LIST.map(t=>{
+    const color = TOPIC_COLORS[t]||COLORS.blue;
+    const count = t==="All Mixed" ? 15 : QUESTIONS.filter(q=>q.topic===t).length;
+    return `<button class="topic-btn" onclick="startQuiz('${t}')">
+      <span class="display" style="font-size:19px;color:${COLORS.ink}">${t}</span>
+      <span class="topic-tag mono" style="background:${color}22;color:${color}">${count} Q</span>
+    </button>`;
+  }).join('');
+  app.innerHTML = `<div class="screen">${topbar('Timed Quiz')}
+    <div class="mono" style="font-size:11px;color:var(--muted);margin:18px 0 10px;letter-spacing:1px;">CHOOSE TOPIC</div>
+    ${rows}
+  </div>`;
+}
+
+function startQuiz(topic){
+  const pool = topic==="All Mixed" ? QUESTIONS : QUESTIONS.filter(q=>q.topic===topic);
+  const queue = shuffle(pool).slice(0, topic==="All Mixed" ? 15 : pool.length);
+  quizState = { topic, queue, idx:0, selected:null, locked:false, timeLeft:QUESTION_TIME, score:0, correctCount:0, streak:0, bestStreak:0 };
+  state = {screen:'quizPlay'};
+  render();
+  runTimer();
+}
+
+function runTimer(){
+  clearInterval(quizTimerId);
+  quizTimerId = setInterval(()=>{
+    if(!quizState || quizState.locked) return;
+    quizState.timeLeft -= 1;
+    if(quizState.timeLeft <= 0){
+      handleAnswer(-1);
+    } else {
+      updateTimerUI();
+    }
+  }, 1000);
+}
+function updateTimerUI(){
+  const tl = document.getElementById('timeLeftNum');
+  const tb = document.getElementById('timeFill');
+  if(tl) tl.textContent = quizState.timeLeft + 's';
+  if(tb){
+    tb.style.width = (quizState.timeLeft/QUESTION_TIME*100)+'%';
+    tb.style.background = quizState.timeLeft<=8 ? COLORS.red : COLORS.amber;
+  }
+  if(tl) tl.style.color = quizState.timeLeft<=8 ? COLORS.red : COLORS.blue;
+}
+
+function renderQuizPlay(){
+  const q = quizState.queue[quizState.idx];
+  const progress = ((quizState.idx+1)/quizState.queue.length)*100;
+  const optsHtml = q.options.map((opt,i)=>{
+    return `<button class="opt" id="opt${i}" onclick="handleAnswer(${i})">
+      <span class="letter mono">${String.fromCharCode(65+i)}</span>${esc(opt)}
+    </button>`;
+  }).join('');
+  app.innerHTML = `<div class="screen">
+    ${topbar(quizState.topic)}
+    <div style="display:flex;justify-content:space-between;align-items:center;margin:14px 0 6px;">
+      <span class="mono" style="font-size:11px;color:var(--muted)">Q${quizState.idx+1}/${quizState.queue.length}</span>
+      <span class="mono" style="font-size:11px;color:var(--muted)" id="scoreNum">SCORE ${quizState.score}</span>
+    </div>
+    <div class="progressbar"><div class="fill" style="width:${progress}%"></div></div>
+    <div class="timerrow">
+      <div class="mono" id="timeLeftNum" style="font-size:16px;font-weight:700;color:${COLORS.blue};width:34px;">${quizState.timeLeft}s</div>
+      <div class="timerbar"><div class="fill" id="timeFill" style="width:100%;background:${COLORS.amber}"></div></div>
+    </div>
+    <div class="qcard" style="border-color:${TOPIC_COLORS[q.topic]}33">
+      <span class="qtag mono" style="background:${TOPIC_COLORS[q.topic]}22;color:${TOPIC_COLORS[q.topic]}">${q.topic.toUpperCase()}</span>
+      <div class="qtext">${esc(q.q)}</div>
+    </div>
+    <div id="optsWrap">${optsHtml}</div>
+    <div id="explainWrap"></div>
+  </div>`;
+}
+
+function handleAnswer(optIdx){
+  if(!quizState || quizState.locked) return;
+  quizState.locked = true;
+  quizState.selected = optIdx;
+  const q = quizState.queue[quizState.idx];
+  const correct = optIdx === q.correct;
+  if(correct){
+    quizState.score += 10 + Math.max(0, Math.floor(quizState.timeLeft/3));
+    quizState.correctCount += 1;
+    quizState.streak += 1;
+    quizState.bestStreak = Math.max(quizState.bestStreak, quizState.streak);
+  } else {
+    quizState.streak = 0;
+  }
+  // update UI: highlight options
+  for(let i=0;i<q.options.length;i++){
+    const el = document.getElementById('opt'+i);
+    if(!el) continue;
+    el.disabled = true;
+    if(i===q.correct){ el.style.background=COLORS.green+'22'; el.style.borderColor=COLORS.green; el.style.color=COLORS.green; }
+    else if(i===optIdx){ el.style.background=COLORS.red+'22'; el.style.borderColor=COLORS.red; el.style.color=COLORS.red; }
+  }
+  const scoreEl = document.getElementById('scoreNum');
+  if(scoreEl) scoreEl.textContent = 'SCORE ' + quizState.score;
+  const ew = document.getElementById('explainWrap');
+  if(ew) ew.innerHTML = `<div class="explain">💡 ${esc(q.explain)}</div>`;
+
+  setTimeout(goNextQuestion, 1400);
+}
+
+function goNextQuestion(){
+  if(!quizState) return;
+  const nextIdx = quizState.idx + 1;
+  if(nextIdx >= quizState.queue.length){
+    clearInterval(quizTimerId);
+    state = {screen:'quizResult'};
+    render();
+    return;
+  }
+  quizState.idx = nextIdx;
+  quizState.selected = null;
+  quizState.locked = false;
+  quizState.timeLeft = QUESTION_TIME;
+  render();
+}
+
+function renderQuizResult(){
+  const {score, correctCount, queue, bestStreak, topic} = quizState;
+  const pct = Math.round((correctCount/queue.length)*100);
+  app.innerHTML = `<div class="screen">
+    ${topbar('Result')}
+    <div class="resultbox">
+      <div class="mono" style="font-size:11px;letter-spacing:2px;opacity:.7;">FINAL SCORE</div>
+      <div class="resultscore mono">${score}</div>
+      <div style="font-size:13px;opacity:.85;">${correctCount}/${queue.length} correct (${pct}%) · Best streak ${bestStreak}</div>
+    </div>
+    <div class="save-row" id="saveRow">
+      <input id="nameInput" placeholder="Your name for leaderboard" />
+      <button onclick="doSaveScore()">Save</button>
+    </div>
+    <div class="btnrow">
+      <button class="btn btn-outline" onclick="openQuizSelect()">Play Again</button>
+      <button class="btn btn-fill" onclick="goHome()">Home</button>
+    </div>
+  </div>`;
+}
+
+function doSaveScore(){
+  const nameInput = document.getElementById('nameInput');
+  const name = (nameInput.value||'').trim().slice(0,20);
+  if(!name) return;
+  const {score, correctCount, queue, topic} = quizState;
+  saveLeaderboard({ name, score, topic, correctCount, total: queue.length, date: new Date().toISOString() });
+  document.getElementById('saveRow').innerHTML = `<div style="text-align:center;color:${COLORS.green};font-size:13px;font-weight:600;width:100%;">✅ Saved to leaderboard!</div>`;
+}
+
+/* ---- LEADERBOARD ---- */
+function renderLeaderboard(){
+  const data = getLeaderboard();
+  let rows;
+  if(data.length===0){
+    rows = `<div class="empty">🚉 No scores yet. Play a quiz and save your score to top this board!</div>`;
+  } else {
+    rows = data.map((e,i)=>`
+      <div class="lb-row" style="border-color:${i===0?COLORS.amber:COLORS.paperDark}">
+        <div class="lb-rank mono" style="background:${i===0?COLORS.amber:COLORS.paperDark};color:${i===0?'#fff':COLORS.muted}">${i+1}</div>
+        <div style="flex:1;">
+          <div class="lb-name">${esc(e.name)}</div>
+          <div class="lb-sub">${esc(e.topic)} · ${e.correctCount}/${e.total} correct</div>
+        </div>
+        <div class="lb-score mono">${e.score}</div>
+      </div>`).join('');
+  }
+  app.innerHTML = `<div class="screen">
+    ${topbar('Leaderboard')}
+    <div class="mono" style="font-size:11px;color:var(--muted);margin:14px 0 10px;letter-spacing:1px;">TOP SCORERS · ON THIS DEVICE</div>
+    ${rows}
+  </div>`;
+}
+
+/* ---- FLASHCARDS ---- */
+function renderFlashcards(){
+  const card = flashState.order[flashState.idx];
+  const color = TOPIC_COLORS[card.topic];
+  app.innerHTML = `<div class="screen">
+    ${topbar('Flashcards')}
+    <div class="mono" style="font-size:11px;color:var(--muted);margin:14px 0 16px;letter-spacing:1px;text-align:center;">CARD ${flashState.idx+1} / ${flashState.order.length}</div>
+    <div class="flash-card" id="flashCard" style="background:${flashState.flipped?color:'#fff'};border:2px solid ${color};" onclick="flipCard()">
+      <span class="mono" style="font-size:10px;margin-bottom:12px;color:${flashState.flipped?'#fff':color};background:${flashState.flipped?'#ffffff33':color+'22'};padding:3px 8px;border-radius:4px;">${card.topic.toUpperCase()}</span>
+      <div class="display" style="font-size:${flashState.flipped?20:24}px;color:${flashState.flipped?'#fff':COLORS.ink};line-height:1.3;">${esc(flashState.flipped?card.back:card.front)}</div>
+      <div style="margin-top:16px;font-size:11px;color:${flashState.flipped?'#ffffffaa':COLORS.muted};">${flashState.flipped?'Tap to flip back':'Tap to reveal answer'}</div>
+    </div>
+    <div class="btnrow">
+      <button class="btn btn-outline" onclick="prevCard()">← Prev</button>
+      <button class="btn btn-fill" onclick="nextCard()">Next →</button>
+    </div>
+    <button style="width:100%;margin-top:10px;padding:10px;border-radius:8px;border:2px dashed ${COLORS.muted}55;background:transparent;color:${COLORS.muted};font-size:12.5px;" onclick="reshuffleCards()">🔀 Shuffle deck</button>
+  </div>`;
+}
+function flipCard(){ flashState.flipped = !flashState.flipped; renderFlashcards(); }
+function nextCard(){ flashState.flipped=false; flashState.idx=(flashState.idx+1)%flashState.order.length; renderFlashcards(); }
+function prevCard(){ flashState.flipped=false; flashState.idx=(flashState.idx-1+flashState.order.length)%flashState.order.length; renderFlashcards(); }
+function reshuffleCards(){ flashState={order:shuffle(FLASHCARDS), idx:0, flipped:false}; renderFlashcards(); }
+
+/* ---- INIT ---- */
+render();
+
+/* ---- PWA service worker registration ---- */
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
